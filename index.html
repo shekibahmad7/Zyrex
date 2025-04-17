@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,6 +16,7 @@
       color: #f1f1f1;
       line-height: 1.6;
       animation: fadeIn 1.5s ease-in;
+      transition: background 0.3s, color 0.3s;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -50,62 +50,83 @@
     section:nth-of-type(4) { animation-delay: 0.9s; }
     section:nth-of-type(5) { animation-delay: 1.2s; }
     section:nth-of-type(6) { animation-delay: 1.5s; }
+    section:nth-of-type(7) { animation-delay: 1.8s; }
+    section:nth-of-type(8) { animation-delay: 2.1s; }@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(30px); }
+}
+h2 {
+  color: #00ffcc;
+  margin-bottom: 1rem;
+}
+ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+ul li::before {
+  content: '• ';
+  color: #00ffcc;
+}
+.button-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #00ffcc;
+  color: #000;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s;
+  margin-top: 1rem;
+}
+.button-link:hover {
+  background-color: #00ddaa;
+}
+.toggle-theme {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #00ffcc;
+  color: #000;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(90deg, #1a1a1a, #111);
+  color: #888;
+  margin-top: 3rem;
+  animation: fadeIn 2s ease;
+}
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  section {
+    padding: 2rem 1rem;
+  }
+}
 
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
-      from { opacity: 0; transform: translateY(30px); }
-    }
-    h2 {
-      color: #00ffcc;
-      margin-bottom: 1rem;
-    }
-    ul {
-      list-style: none;
-      padding-left: 1rem;
-    }
-    ul li::before {
-      content: '• ';
-      color: #00ffcc;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: linear-gradient(90deg, #1a1a1a, #111);
-      color: #888;
-      margin-top: 3rem;
-      animation: fadeIn 2s ease;
-    }
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
-      section {
-        padding: 2rem 1rem;
-      }
-    }
   </style>
 </head>
 <body>
-  <header>
+  <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>  <header>
     <h1>Neox</h1>
     <p>Welcome to my world!</p>
-  </header>
-
-  <section>
+  </header>  <section>
     <h2>About Me</h2>
     <p>I'm Neox, a passionate creator with skills in Lua, Castle development, gaming, and creative coding. I love building cool projects and sharing what I learn.</p>
-  </section>
-
-  <section>
+  </section>  <section>
     <h2>Hobbies</h2>
     <ul>
       <li>Game development</li>
       <li>Programming in Lua & Python</li>
       <li>Making websites and tools</li>
     </ul>
-  </section>
-
-  <section>
+  </section>  <section>
     <h2>Skills</h2>
     <ul>
       <li>Lua (god-tier)</li>
@@ -113,22 +134,30 @@
       <li>Python programming</li>
       <li>HTML, CSS, JavaScript basics</li>
     </ul>
-  </section>
-
-  <section>
+  </section>  <section>
     <h2>Favorite Games</h2>
     <ul>
       <li>Any cool Lua-based game</li>
     </ul>
-  </section>
-
-  <section>
+  </section>  <section>
+    <h2>Projects</h2>
+    <p>I build fun and interactive projects with Lua and Castle. Check one of them out below:</p>
+    <a href="https://s.castle.xyz/uogjq8NIFXdY" class="button-link" target="_blank">Play My Castle Game</a>
+  </section>  <section>
     <h2>Contact Me</h2>
     <p>You can reach me through Discord, GitHub, or in your favorite dev community!</p>
-  </section>
-
-  <footer>
+  </section>  <footer>
     <p>Made by Neox | 2025</p>
-  </footer>
-</body>
+  </footer>  <script>
+    function toggleTheme() {
+      const body = document.body;
+      if (body.style.backgroundColor === 'white') {
+        body.style.backgroundColor = '#0f0f0f';
+        body.style.color = '#f1f1f1';
+      } else {
+        body.style.backgroundColor = 'white';
+        body.style.color = '#111';
+      }
+    }
+  </script></body>
 </html>
