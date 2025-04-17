@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neox | About Me</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f0f0f;
+      color: #f1f1f1;
+      line-height: 1.6;
+      animation: fadeIn 1.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    header {
+      background: linear-gradient(90deg, #1a1a1a, #111);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      animation: slideDown 1.2s ease;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    header h1 {
+      font-size: 3rem;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+    section {
+      padding: 3rem 1rem;
+      max-width: 800px;
+      margin: auto;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+    section:nth-of-type(2) { animation-delay: 0.3s; }
+    section:nth-of-type(3) { animation-delay: 0.6s; }
+    section:nth-of-type(4) { animation-delay: 0.9s; }
+    section:nth-of-type(5) { animation-delay: 1.2s; }
+    section:nth-of-type(6) { animation-delay: 1.5s; }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(30px); }
+    }
+    h2 {
+      color: #00ffcc;
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding-left: 1rem;
+    }
+    ul li::before {
+      content: '• ';
+      color: #00ffcc;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: linear-gradient(90deg, #1a1a1a, #111);
+      color: #888;
+      margin-top: 3rem;
+      animation: fadeIn 2s ease;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      section {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Neox</h1>
+    <p>Welcome to my world!</p>
+  </header>
+
+  <section>
+    <h2>About Me</h2>
+    <p>I'm Neox, a passionate creator with skills in Lua, Castle development, gaming, and creative coding. I love building cool projects and sharing what I learn.</p>
+  </section>
+
+  <section>
+    <h2>Hobbies</h2>
+    <ul>
+      <li>Game development</li>
+      <li>Programming in Lua & Python</li>
+      <li>Making websites and tools</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <ul>
+      <li>Lua (god-tier)</li>
+      <li>Castle visual scripting</li>
+      <li>Python programming</li>
+      <li>HTML, CSS, JavaScript basics</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Favorite Games</h2>
+    <ul>
+      <li>Any cool Lua-based game</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Contact Me</h2>
+    <p>You can reach me through Discord, GitHub, or in your favorite dev community!</p>
+  </section>
+
+  <footer>
+    <p>Made by Neox | 2025</p>
+  </footer>
+</body>
+</html>
