@@ -226,21 +226,31 @@
       }
     }
   </script>
-<!-- Contact Section -->
+<!-- Enhanced Contact Section -->
 <section id="contact" style="padding: 40px 20px; background-color: #1e1e1e; color: #ffffff;">
   <h2 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-bottom: 30px;">Contact Me</h2>
   <form action="https://formsubmit.co/shoaibmamozai4@gmail.com" method="POST" style="max-width: 600px; margin: 0 auto;">
+    
+    <!-- Hidden Enhancements -->
+    <input type="hidden" name="_captcha" value="false"> <!-- disables default captcha -->
+    <input type="hidden" name="_autoresponse" value="Thanks for messaging me! I’ll reply as soon as I can.">
+    <input type="hidden" name="_next" value="https://neoxsite.netlify.app/thank-you.html"> <!-- redirect after submit -->
+    <input type="text" name="_honey" style="display:none"> <!-- spam trap -->
+
+    <!-- User Inputs -->
     <input type="text" name="name" placeholder="Your Name" required
       style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff;">
     <input type="email" name="email" placeholder="Your Email" required
       style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff;">
     <textarea name="message" placeholder="Your Message" required
       style="width: 100%; padding: 12px; margin-bottom: 20px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff; height: 150px;"></textarea>
+    
     <button type="submit"
       style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
       Send Message
     </button>
   </form>
+  </section>
 </section>
 </body>
 </html>
