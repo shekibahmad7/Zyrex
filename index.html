@@ -1,149 +1,243 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7095470772178850" crossorigin="anonymous"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neox | About Me</title>
-  <link rel="icon" type="image/png" href="NeoxRounded.png" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; user-select: none; }
-    body {
-      font-family: Arial, sans-serif;
-      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
-      color: #f1f1f1;
-      line-height: 1.6;
-      animation: fadeIn 1.5s ease-in;
-      transition: background 0.3s, color 0.3s;
-      overflow-x: hidden;
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    header {
-      background: linear-gradient(90deg, #1a1a1a, #111);
-      padding: 2rem;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7095470772178850"
+     crossorigin="anonymous"></script>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neox | About Me</title>
+
+<link rel="icon" type="image/png" href="NeoxRounded.png" />
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    user-select: none; /* Disable text selection */
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
+    color: #f1f1f1;
+    line-height: 1.6;
+    animation: fadeIn 1.5s ease-in;
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  header {
+    background: linear-gradient(90deg, #1a1a1a, #111);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+
+  header h1 {
+    font-size: 3rem;
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc;
+  }
+
+  section {
+    padding: 3rem 1rem;
+    max-width: 800px;
+    margin: auto;
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+  }
+
+  section:nth-of-type(2) { animation-delay: 0.3s; }
+  section:nth-of-type(3) { animation-delay: 0.6s; }
+  section:nth-of-type(4) { animation-delay: 0.9s; }
+  section:nth-of-type(5) { animation-delay: 1.2s; }
+  section:nth-of-type(6) { animation-delay: 1.5s; }
+
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(30px); }
+  }
+
+  h2 {
+    color: #00ffcc;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 1rem;
+  }
+
+  ul li::before {
+    content: '• ';
+    color: #00ffcc;
+  }
+
+  .button-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #00ffcc;
+    color: #000;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 1rem;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .button-link:hover {
+    background-color: #00ddaa;
+    transform: scale(1.05);
+  }
+
+  .button-link:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .toggle-theme {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    color: #00ffcc;
+    border: 2px solid #00ffcc;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 999;
+    transition: all 0.3s ease;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .toggle-theme:hover {
+    background: #00ffcc;
+    color: #000;
+  }
+
+  .toggle-theme:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background: linear-gradient(90deg, #1a1a1a, #111);
+    color: #888;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 600px) {
     header h1 {
-      font-size: 3rem;
-      color: #00ffcc;
-      text-shadow: 0 0 10px #00ffcc;
+      font-size: 2rem;
     }
     section {
-      padding: 3rem 1rem;
-      max-width: 800px;
-      margin: auto;
-      animation: fadeInUp 1s ease forwards;
-      opacity: 0;
+      padding: 2rem 1rem;
     }
-    section:nth-of-type(n+2) { animation-delay: 0.3s; }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(30px); } }
-    h2 { color: #00ffcc; margin-bottom: 1rem; }
-    ul { list-style: none; padding-left: 1rem; }
-    ul li::before { content: '• '; color: #00ffcc; }
-    .button-link {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background-color: #00ffcc;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background 0.3s, transform 0.2s;
-      margin-top: 1rem;
-    }
-    .button-link:hover { background-color: #00ddaa; transform: scale(1.05); }
-    .toggle-theme {
-      position: fixed; top: 10px; right: 10px;
-      background: transparent;
-      color: #00ffcc;
-      border: 2px solid #00ffcc;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      z-index: 999;
-    }
-    .toggle-theme:hover { background: #00ffcc; color: #000; }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: linear-gradient(90deg, #1a1a1a, #111);
-      color: #888;
-      margin-top: 3rem;
-    }
-    @media (max-width: 600px) {
-      header h1 { font-size: 2rem; }
-      section { padding: 2rem 1rem; }
-    }
-    .bg-animation {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: repeating-radial-gradient(circle at center, rgba(0,255,204,0.05) 1px, transparent 10px);
-      animation: floatBg 30s linear infinite;
-    }
-    @keyframes floatBg { from { background-position: 0 0; } to { background-position: 1000px 1000px; } }
-  </style>
+  }
+
+  .bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background: repeating-radial-gradient(circle at center, rgba(0,255,204,0.05) 1px, transparent 10px);
+    animation: floatBg 30s linear infinite;
+  }
+
+  @keyframes floatBg {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+  }
+
+  .ad-container {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 728px;
+    text-align: center;
+  }
+</style>
 </head>
 <body>
-  <div class="bg-animation"></div>
-  <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>  <header>
+
+ <amp-auto-ads type="adsense"
+        data-ad-client="ca-pub-7095470772178850">
+</amp-auto-ads>
+
+ <div class="bg-animation"></div>
+  <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+
+  <header>
     <h1>Neox</h1>
     <p>Welcome to my world!</p>
-  </header>  <section style="text-align: center;">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7095470772178850" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>  <section>
+  </header>
+
+  <section>
     <h2>About Me</h2>
-    <p>Hi, I'm Shoaib...</p>
+    <p>Hi, I'm Shoaib, a 17-year-old passionate creator with a strong love for gaming, creative coding, and exploring new ideas. I'm always building, experimenting, and bringing unique concepts to life. Whether you're curious about my work, age, name, or anything else, feel free to ask — I'm an open book!</p>
   </section>
-  <section style="text-align: center;">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7095470772178850" data-ad-slot="1234567891" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>  <section>
+
+  <section>
     <h2>Hobbies</h2>
-    <ul><li>Game dev</li><li>Lua & Python</li><li>Web dev</li></ul>
+    <ul>
+      <li>Game development</li>
+      <li>Programming in Lua & Python</li>
+      <li>Making websites and tools</li>
+    </ul>
   </section>
-  <section style="text-align: center;">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7095470772178850" data-ad-slot="1234567892" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>  <section>
+
+  <section>
     <h2>Skills</h2>
-    <ul><li>Lua (advanced)</li><li>Castle scripting</li><li>Python, HTML, JS</li></ul>
+    <ul>
+      <li>Lua (advanced-tier)</li>
+      <li>Castle visual scripting</li>
+      <li>Python programming</li>
+      <li>HTML, CSS, JavaScript</li>
+    </ul>
   </section>
-  <section style="text-align: center;">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7095470772178850" data-ad-slot="1234567893" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>  <section>
+
+  <section>
     <h2>Projects</h2>
-    <p>I build fun and interactive projects.</p>
+    <p>I build fun and interactive projects. Check one out below:</p>
     <a href="https://s.castle.xyz/eiZ5mjaIyTXj" class="button-link" target="_blank">My Castle Profile</a>
   </section>
-  <section style="text-align: center;">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7095470772178850" data-ad-slot="9397841811" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>  <section>
+
+  <section>
     <h2>Contact Me</h2>
-    <p>Reach out via Discord or GitHub!</p>
-    <form action="https://formsubmit.co/shoaibmamozai4@gmail.com" method="POST">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+    <p>Reach out via Discord, GitHub, or your favorite dev community!</p>
   </section>
-  <section style="text-align: center;">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7095470772178850" data-ad-slot="1234567894" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>  <section style="text-align: center;">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7095470772178850" data-ad-slot="1234567895" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>  <footer>
+
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-7095470772178850"
+      data-ad-slot="9397841811"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  </div>
+
+  <footer>
     <p>Made by Neox | 2025</p>
-  </footer>  <script>
+  </footer>
+
+  <script>
     function toggleTheme() {
       const body = document.body;
       if (body.classList.contains("light")) {
@@ -156,5 +250,10 @@
         body.style.color = "#111";
       }
     }
-  </script></body>
+  </script>
+
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</body>
 </html>
