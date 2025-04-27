@@ -105,33 +105,6 @@
       transform: scale(1.08);
     }
 
-    .toggle-theme {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: transparent;
-      color: #00ffcc;
-      border: 2px solid #00ffcc;
-      padding: 0.5rem 1rem;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: bold;
-      z-index: 999;
-      transition: all 0.4s ease;
-      outline: none;
-    }
-
-    .toggle-theme:focus {
-      outline: none;
-      box-shadow: none;
-    }
-
-    .toggle-theme:hover {
-      background: #00ffcc;
-      color: #000;
-      transform: scale(1.1);
-    }
-
     footer {
       text-align: center;
       padding: 1rem;
@@ -192,8 +165,6 @@
 
   <div class="bg-animation"></div>
 
-  <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
-
   <header>
     <h1>Neox</h1>
     <p>Welcome to my World!</p>
@@ -229,24 +200,24 @@
     <a href="https://s.castle.xyz/eiZ5mjaIyTXj" class="button-link" target="_blank">My Castle Profile</a>
   </section>
 
- <section style="--i:5;">
-  <h2>Games</h2>
-  <p>Play simple games right inside my website! Click to start:</p>
+  <section style="--i:5;">
+    <h2>Games</h2>
+    <p>Play simple games right inside my website! Click to start:</p>
 
-  <div class="games-grid">
-    <div class="game-card">
-      <a href="tic-tac-toe" class="button-link">Play Tic-Tac-Toe</a>
-    </div>
+    <div class="games-grid">
+      <div class="game-card">
+        <a href="tic-tac-toe" class="button-link">Play Tic-Tac-Toe</a>
+      </div>
 
-    <div class="game-card">
-      <a href="memory-match" class="button-link">Play Memory Match</a>
-    </div>
+      <div class="game-card">
+        <a href="memory-match" class="button-link">Play Memory Match</a>
+      </div>
 
-    <div class="game-card">
-      <a href="color-clicker" class="button-link">Play Colors Clicker</a>
+      <div class="game-card">
+        <a href="color-clicker" class="button-link">Play Colors Clicker</a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <section style="--i:6;">
     <h2>Contact Me</h2>
@@ -267,21 +238,6 @@
   <footer>
     <p>Made by Neox | 2025</p>
   </footer>
-
-  <script>
-    function toggleTheme() {
-      const body = document.body;
-      if (body.classList.contains("light")) {
-        body.classList.remove("light");
-        body.style.background = "radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%)";
-        body.style.color = "#f1f1f1";
-      } else {
-        body.classList.add("light");
-        body.style.background = "#ffffff";
-        body.style.color = "#111";
-      }
-    }
-  </script>
 
 </body>
 </html>
