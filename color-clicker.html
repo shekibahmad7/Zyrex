@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="default.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Neox Color Clicker</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: pageFadeIn 1s forwards ease;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    .score {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .target-color {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+      animation: fadeIn 1s ease;
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .color-btn {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .color-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .white { background: white; }
+    .blue { background: blue; }
+    .orange { background: orange; }
+    .yellow { background: yellow; }
+    .green { background: green; }
+    .red { background: red; }
+    .purple { background: purple; }
+    .cyan { background: cyan; }
+    .pink { background: pink; }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: #222;
+      padding: 30px;
+      border-radius: 10px;
+      color: white;
+      text-align: center;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    .popup.active {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .popup button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #555;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .popup button:hover {
+      background: #777;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes pageFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Neox Color Clicker</h1>
+
+<div class="score">Score: <span id="score">0</span></div>
+<div class="target-color" id="target-color">Click the WHITE!</div>
+
+<div class="color-grid">
+  <div class="color-btn white" onclick="checkColor('white')"></div>
+  <div class="color-btn blue" onclick="checkColor('blue')"></div>
+  <div class="color-btn orange" onclick="checkColor('orange')"></div>
+  <div class="color-btn yellow" onclick="checkColor('yellow')"></div>
+  <div class="color-btn green" onclick="checkColor('green')"></div>
+  <div class="color-btn red" onclick="checkColor('red')"></div>
+  <div class="color-btn purple" onclick="checkColor('purple')"></div>
+  <div class="color-btn cyan" onclick="checkColor('cyan')"></div>
+  <div class="color-btn pink" onclick="checkColor('pink')"></div>
+</div>
+
+<div class="popup" id="popup">
+  <p id="popupMessage">Game Over!</p>
+  <button onclick="restartGame()">Play Again</button>
+</div>
+
+<script>
+  let score = 0;
+  let targetColor = '';
+  let gameOver = false;
+
+  function startGame() {
+    score = 0;
+    gameOver = false;
+    document.getElementById('score').textContent = score;
+    showNewTargetColor();
+  }
+
+  function showNewTargetColor() {
+    const colors = ['white', 'blue', 'orange', 'yellow', 'green', 'red', 'purple', 'cyan', 'pink'];
+    targetColor = colors[Math.floor(Math.random() * colors.length)];
+    document.getElementById('target-color').textContent = `Click the ${targetColor.toUpperCase()}!`;
+  }
+
+  function checkColor(color) {
+    if (gameOver) return;
+
+    if (color === targetColor) {
+      score++;
+      document.getElementById('score').textContent = score;
+      showNewTargetColor();
+    } else {
+      endGame();
+    }
+  }
+
+  function endGame() {
+    gameOver = true;
+    document.getElementById('popupMessage').textContent = `Game Over! Your final score is ${score}`;
+    document.getElementById('popup').classList.add('active');
+  }
+
+  function restartGame() {
+    document.getElementById('popup').classList.remove('active');
+    startGame();
+  }
+
+  startGame();
+</script>
+
+</body>
+</html>
