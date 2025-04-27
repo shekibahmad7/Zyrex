@@ -1,20 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="default.css"/>
   <meta charset="UTF-8">
   <title>Neox Tic Tac Toe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* GLOBAL CLEANUP */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      user-select: none;
-      -webkit-user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
     body {
       background: #0a0a0a;
       color: #f0f0f0;
@@ -230,31 +221,7 @@ function restart() {
 createBoard();
 </script>
 
-<a href="index.html">Back to Home</a>
-
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyD17fNaRKGArSC854SripOxWmaWSn_WW0Y",
-    authDomain: "leaderboard-839e9.firebaseapp.com",
-    projectId: "leaderboard-839e9",
-    storageBucket: "leaderboard-839e9.firebasestorage.app",
-    messagingSenderId: "371315602548",
-    appId: "1:371315602548:web:7351598312c0f3c4ed4d21",
-    measurementId: "G-633FPH677P"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+<a href="/">Back to Home</a>
 
 </body>
 </html>
