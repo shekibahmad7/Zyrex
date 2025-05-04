@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register | Neox</title>
+  <style>
+    body {
+      background: radial-gradient(#1a1a1a, #0f0f0f);
+      color: #f1f1f1;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: #111;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00ffcc;
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+      color: #00ffcc;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+      background: #222;
+      color: white;
+    }
+    button {
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+    }
+    a {
+      color: #00ffcc;
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Register</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="register()">Register</button>
+    <a href="login.html">Already have an account? Login</a>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0w2CYNgPKciXQZ10h-vwnvW-8WmWiPdg",
+      authDomain: "loginpage-55633.firebaseapp.com",
+      projectId: "loginpage-55633",
+      appId: "1:112787874903:web:54070d414ef38b7e40af12"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.register = function () {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => window.location.href = "/")
+        .catch(e => alert("Registration failed: " + e.message));
+    };
+  </script>
+</body>
+</html>
