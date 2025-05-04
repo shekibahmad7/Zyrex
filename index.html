@@ -36,39 +36,22 @@
       }
     }
 
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+
     header {
       background: linear-gradient(90deg, #1a1a1a, #111);
       padding: 2rem;
       text-align: center;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-      position: relative;
     }
 
     header h1 {
       font-size: 3rem;
       color: #00ffcc;
       text-shadow: 0 0 10px #00ffcc;
-    }
-
-    .login-button {
-      position: absolute;
-      top: 1.5rem;
-      right: 2rem;
-      display: inline-block;
-      padding: 10px 20px;
-      border: 2px solid #00ffd0;
-      border-radius: 8px;
-      background: transparent;
-      color: #00ffd0;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .login-button:hover {
-      background: #00ffd0;
-      color: #000;
-      box-shadow: 0 0 10px #00ffd0aa;
     }
 
     section {
@@ -139,12 +122,6 @@
       header h1 {
         font-size: 2rem;
       }
-      .login-button {
-        top: 1rem;
-        right: 1rem;
-        padding: 8px 14px;
-        font-size: 0.9rem;
-      }
       section {
         padding: 2rem 1rem;
       }
@@ -193,80 +170,81 @@
 
   <div class="bg-animation"></div>
 
-  <header>
-    <h1>Neox</h1>
-    <p>Welcome to my world!</p>
-    <a href="login" class="login-button">Login</a>
-  </header>
+  <div class="container">
+    <header>
+      <h1>Neox</h1>
+      <p>Welcome to my world!</p>
+    </header>
 
-  <section style="--i:1;">
-    <h2>About Me</h2>
-    <p>Hi, I'm Shoaib, a passionate creator with a strong love for gaming, creative coding, and exploring new ideas. I'm always building, experimenting, and bringing unique concepts to life. Whether you're curious about my work, age, name, or anything else, feel free to ask — I'm an open book!</p>
-  </section>
+    <section style="--i:1;">
+      <h2>About Me</h2>
+      <p>Hi, I'm Shoaib, a passionate creator with a strong love for gaming, creative coding, and exploring new ideas. I'm always building, experimenting, and bringing unique concepts to life. Whether you're curious about my work, age, name, or anything else, feel free to ask — I'm an open book!</p>
+    </section>
 
-  <section style="--i:2;">
-    <h2>Hobbies</h2>
-    <ul>
-      <li>Game development</li>
-      <li>Programming in Lua & Python</li>
-      <li>Making websites and tools</li>
-    </ul>
-  </section>
+    <section style="--i:2;">
+      <h2>Hobbies</h2>
+      <ul>
+        <li>Game development</li>
+        <li>Programming in Lua & Python</li>
+        <li>Making websites and tools</li>
+      </ul>
+    </section>
 
-  <section style="--i:3;">
-    <h2>Skills</h2>
-    <ul>
-      <li>Lua (advanced-tier)</li>
-      <li>Castle visual scripting</li>
-      <li>Python programming</li>
-      <li>HTML, CSS, JavaScript</li>
-    </ul>
-  </section>
+    <section style="--i:3;">
+      <h2>Skills</h2>
+      <ul>
+        <li>Lua (advanced-tier)</li>
+        <li>Castle visual scripting</li>
+        <li>Python programming</li>
+        <li>HTML, CSS, JavaScript</li>
+      </ul>
+    </section>
 
-  <section style="--i:4;">
-    <h2>Projects</h2>
-    <p>I build fun and interactive projects. Check one out below:</p>
-    <a href="https://s.castle.xyz/eiZ5mjaIyTXj" class="button-link" target="_blank">My Castle Profile</a>
-  </section>
+    <section style="--i:4;">
+      <h2>Projects</h2>
+      <p>I build fun and interactive projects. Check one out below:</p>
+      <a href="https://s.castle.xyz/eiZ5mjaIyTXj" class="button-link" target="_blank">My Castle Profile</a>
+    </section>
 
-  <section style="--i:5;">
-    <h2>Games</h2>
-    <p>Play simple games right inside my website! Click to start:</p>
+    <section style="--i:5;">
+      <h2>Games</h2>
+      <p>Play simple games right inside my website! Click to start:</p>
 
-    <div class="games-grid">
-      <div class="game-card">
-        <a href="tic-tac-toe" class="button-link">Play Tic-Tac-Toe</a>
+      <div class="games-grid">
+        <div class="game-card">
+          <a href="tic-tac-toe" class="button-link">Play Tic-Tac-Toe</a>
+        </div>
+
+        <div class="game-card">
+          <a href="memory-match" class="button-link">Play Memory Match</a>
+        </div>
+
+        <div class="game-card">
+          <a href="color-clicker" class="button-link">Play Colors Clicker</a>
+        </div>
       </div>
+    </section>
 
-      <div class="game-card">
-        <a href="memory-match" class="button-link">Play Memory Match</a>
-      </div>
+    <section style="--i:6;">
+      <h2>Contact Me</h2>
+      <p>Reach out via Discord, GitHub, or your favorite dev community!</p>
 
-      <div class="game-card">
-        <a href="color-clicker" class="button-link">Play Colors Clicker</a>
-      </div>
-    </div>
-  </section>
+      <form action="https://formsubmit.co/shoaibmamozai4@gmail.com" method="POST" style="max-width: 600px; margin: 0 auto;">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_autoresponse" value="Thanks for messaging me! I’ll reply as soon as I can.">
+        <input type="hidden" name="_next" value="https://neoxsite.netlify.app/thank-you">
+        <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff;">
+        <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff;">
+        <textarea name="message" placeholder="Your Message" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff; height: 150px;"></textarea>
 
-  <section style="--i:6;">
-    <h2>Contact Me</h2>
-    <p>Reach out via Discord, GitHub, or your favorite dev community!</p>
+        <button type="submit" style="background: none; border: none; color: #4CAF50; font-size: 1rem; font-weight: bold; cursor: pointer;">Send Message</button>
+      </form>
+    </section>
 
-    <form action="https://formsubmit.co/shoaibmamozai4@gmail.com" method="POST" style="max-width: 600px; margin: 0 auto;">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_autoresponse" value="Thanks for messaging me! I’ll reply as soon as I can.">
-      <input type="hidden" name="_next" value="https://neoxsite.netlify.app/thank-you">
-      <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff;">
-      <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff;">
-      <textarea name="message" placeholder="Your Message" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff; height: 150px;"></textarea>
-
-      <button type="submit" style="background: none; border: none; color: #4CAF50; font-size: 1rem; font-weight: bold; cursor: pointer;">Send Message</button>
-    </form>
-  </section>
-
-  <footer>
-    <p>Made by Neox | 2025</p>
-  </footer>
+    <footer>
+      <p>Made by Neox | 2025</p>
+    </footer>
+  </div>
 
 </body>
 </html>
