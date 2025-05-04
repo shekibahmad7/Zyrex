@@ -1,186 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neox | About Me</title>
-  <link rel="icon" type="image/png" href="NeoxRounded.png" />
-  <link rel="stylesheet" href="default.css"/>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-      user-select: none;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
-      color: #f1f1f1;
-      line-height: 1.6;
-      animation: fadeIn 1.5s ease-in;
-      transition: background 0.5s, color 0.5s;
-      overflow-x: hidden;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Neox | About Me</title>
+    <link rel="icon" type="image/png" href="NeoxRounded.png"/>
+    <link rel="stylesheet" href="default.css"/>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        user-select: none;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      body {
+        font-family: Arial, sans-serif;
+        background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
+        color: #f1f1f1;
+        line-height: 1.6;
+        animation: fadeIn 1.5s ease-in;
+        transition: background 0.5s, color 0.5s;
+        overflow-x: hidden;
       }
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
-    }
-
-    header {
-      background: linear-gradient(90deg, #1a1a1a, #111);
-      padding: 2rem;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    header h1 {
-      font-size: 3rem;
-      color: #00ffcc;
-      text-shadow: 0 0 10px #00ffcc;
-    }
-
-    section {
-      padding: 3rem 1rem;
-      max-width: 800px;
-      margin: auto;
-      animation: fadeInUp 1s ease forwards;
-      opacity: 0;
-    }
-
-    section:nth-of-type(n+2) {
-      animation-delay: calc(0.3s * (var(--i, 1)));
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      header {
+        background: linear-gradient(90deg, #1a1a1a, #111);
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       }
-    }
-
-    h2 {
-      color: #00ffcc;
-      margin-bottom: 1rem;
-    }
-
-    ul {
-      list-style: none;
-      padding-left: 1rem;
-    }
-
-    ul li::before {
-      content: '• ';
-      color: #00ffcc;
-    }
-
-    .button-link {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background-color: #00ffcc;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background 0.3s, transform 0.3s;
-      margin-top: 1rem;
-      outline: none;
-    }
-
-    .button-link:hover {
-      background-color: #00ddaa;
-      transform: scale(1.08);
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: linear-gradient(90deg, #1a1a1a, #111);
-      color: #888;
-      margin-top: 3rem;
-    }
-
-    @media (max-width: 600px) {
       header h1 {
-        font-size: 2rem;
+        font-size: 3rem;
+        color: #00ffcc;
+        text-shadow: 0 0 10px #00ffcc;
       }
       section {
-        padding: 2rem 1rem;
+        padding: 3rem 1rem;
+        max-width: 800px;
+        margin: auto;
+        animation: fadeInUp 1s ease forwards;
+        opacity: 0;
       }
-    }
-
-    .bg-animation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: repeating-radial-gradient(circle at center, rgba(0, 255, 204, 0.05) 1px, transparent 10px);
-      animation: floatBg 30s linear infinite;
-    }
-
-    @keyframes floatBg {
-      from { background-position: 0 0; }
-      to { background-position: 1000px 1000px; }
-    }
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .game-card {
-      background: #1f1f1f;
-      padding: 2rem 1rem;
-      border-radius: 10px;
-      text-align: center;
-      transition: transform 0.3s, background 0.3s;
-    }
-
-    .game-card:hover {
-      background: #2b2b2b;
-      transform: scale(1.05);
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="bg-animation"></div>
-
-  <div class="container">
+      section:nth-of-type(n+2) {
+        animation-delay: calc(0.3s * (var(--i, 1)));
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      h2 {
+        color: #00ffcc;
+        margin-bottom: 1rem;
+      }
+      ul {
+        list-style: none;
+        padding-left: 1rem;
+      }
+      ul li::before {
+        content: '• ';
+        color: #00ffcc;
+      }
+      .button-link {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background-color: #00ffcc;
+        color: #000;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background 0.3s, transform 0.3s;
+        margin-top: 1rem;
+        outline: none;
+      }
+      .button-link:hover {
+        background-color: #00ddaa;
+        transform: scale(1.08);
+      }
+      footer {
+        text-align: center;
+        padding: 1rem;
+        background: linear-gradient(90deg, #1a1a1a, #111);
+        color: #888;
+        margin-top: 3rem;
+      }
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 2rem;
+        }
+        section {
+          padding: 2rem 1rem;
+        }
+      }
+      .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        background: repeating-radial-gradient(circle at center, rgba(0, 255, 204, 0.05) 1px, transparent 10px);
+        animation: floatBg 30s linear infinite;
+      }
+      @keyframes floatBg {
+        from { background-position: 0 0; }
+        to { background-position: 1000px 1000px; }
+      }
+      .games-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      .game-card {
+        background: #1f1f1f;
+        padding: 2rem 1rem;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s, background 0.3s;
+      }
+      .game-card:hover {
+        background: #2b2b2b;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-animation"></div>
     <header>
       <h1>Neox</h1>
       <p>Welcome to my world!</p>
     </header>
-
     <section style="--i:1;">
       <h2>About Me</h2>
       <p>Hi, I'm Shoaib, a passionate creator with a strong love for gaming, creative coding, and exploring new ideas. I'm always building, experimenting, and bringing unique concepts to life. Whether you're curious about my work, age, name, or anything else, feel free to ask — I'm an open book!</p>
     </section>
-
     <section style="--i:2;">
       <h2>Hobbies</h2>
       <ul>
@@ -189,7 +159,6 @@
         <li>Making websites and tools</li>
       </ul>
     </section>
-
     <section style="--i:3;">
       <h2>Skills</h2>
       <ul>
@@ -199,36 +168,29 @@
         <li>HTML, CSS, JavaScript</li>
       </ul>
     </section>
-
     <section style="--i:4;">
       <h2>Projects</h2>
       <p>I build fun and interactive projects. Check one out below:</p>
       <a href="https://s.castle.xyz/eiZ5mjaIyTXj" class="button-link" target="_blank">My Castle Profile</a>
     </section>
-
     <section style="--i:5;">
       <h2>Games</h2>
       <p>Play simple games right inside my website! Click to start:</p>
-
       <div class="games-grid">
         <div class="game-card">
           <a href="tic-tac-toe" class="button-link">Play Tic-Tac-Toe</a>
         </div>
-
         <div class="game-card">
           <a href="memory-match" class="button-link">Play Memory Match</a>
         </div>
-
         <div class="game-card">
           <a href="color-clicker" class="button-link">Play Colors Clicker</a>
         </div>
       </div>
     </section>
-
     <section style="--i:6;">
       <h2>Contact Me</h2>
       <p>Reach out via Discord, GitHub, or your favorite dev community!</p>
-
       <form action="https://formsubmit.co/shoaibmamozai4@gmail.com" method="POST" style="max-width: 600px; margin: 0 auto;">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_autoresponse" value="Thanks for messaging me! I’ll reply as soon as I can.">
@@ -236,15 +198,11 @@
         <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff;">
         <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff;">
         <textarea name="message" placeholder="Your Message" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: none; border-radius: 5px; background-color: #2e2e2e; color: #ffffff; height: 150px;"></textarea>
-
         <button type="submit" style="background: none; border: none; color: #4CAF50; font-size: 1rem; font-weight: bold; cursor: pointer;">Send Message</button>
       </form>
     </section>
-
     <footer>
       <p>Made by Neox | 2025</p>
     </footer>
-  </div>
-
-</body>
+  </body>
 </html>
