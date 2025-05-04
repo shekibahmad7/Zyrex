@@ -2,68 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Register | Neox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
   <style>
     body {
-      background: radial-gradient(#1a1a1a, #0f0f0f);
-      color: #f1f1f1;
+      margin: 0;
       font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: #fff;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
     }
-    .box {
-      background: #111;
+    .container {
+      width: 90%;
+      max-width: 400px;
+      background: #1a1a1a;
       padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 0 20px #00ffcc;
-      width: 300px;
-    }
-    h2 {
-      text-align: center;
-      color: #00ffcc;
+      box-shadow: 0 0 20px #00ffcc55;
     }
     input, button {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
-      background: #222;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    input {
+      background: #2e2e2e;
       color: white;
     }
     button {
       background: #00ffcc;
       color: #000;
       font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #00ddaa;
     }
     a {
       color: #00ffcc;
       display: block;
-      margin-top: 10px;
       text-align: center;
+      margin-top: 1rem;
       text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <div class="box">
+  <div class="container">
     <h2>Register</h2>
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Password" required />
-    <button onclick="register()">Register</button>
+    <button onclick="register()">Create Account</button>
     <a href="login.html">Already have an account? Login</a>
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0w2CYNgPKciXQZ10h-vwnvW-8WmWiPdg",
       authDomain: "loginpage-55633.firebaseapp.com",
       projectId: "loginpage-55633",
+      storageBucket: "loginpage-55633.appspot.com",
+      messagingSenderId: "112787874903",
       appId: "1:112787874903:web:54070d414ef38b7e40af12"
     };
 
@@ -74,8 +82,10 @@
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => window.location.href = "/")
-        .catch(e => alert("Registration failed: " + e.message));
+        .then(() => {
+          window.location.href = "/";
+        })
+        .catch(error => alert("Registration Failed: " + error.message));
     };
   </script>
 </body>
