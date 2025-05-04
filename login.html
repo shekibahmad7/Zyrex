@@ -83,6 +83,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
 
   <script>
+    // Your Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyC0w2CYNgPKciXQZ10h-vwnvW-8WmWiPdg",
       authDomain: "loginpage-55633.firebaseapp.com",
@@ -92,9 +93,11 @@
       appId: "1:112787874903:web:54070d414ef38b7e40af12"
     };
 
+    // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    // Form submission
     document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -104,7 +107,7 @@
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
           alert('Login Successful!');
-          window.location.href = '/';
+          window.location.href = '/'; // Redirect to homepage after successful login
         })
         .catch((error) => {
           alert('Error: ' + error.message);
