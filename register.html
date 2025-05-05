@@ -14,7 +14,57 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
+      position: relative;
     }
+
+    /* Add animated circles */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 255, 204, 0.2);
+      animation: animateCircles 10s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes animateCircles {
+      0% {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: 10%;
+        opacity: 0.8;
+      }
+      25% {
+        width: 300px;
+        height: 300px;
+        top: 20%;
+        left: 40%;
+        opacity: 0.6;
+      }
+      50% {
+        width: 400px;
+        height: 400px;
+        top: 40%;
+        left: 60%;
+        opacity: 0.4;
+      }
+      75% {
+        width: 300px;
+        height: 300px;
+        top: 60%;
+        left: 80%;
+        opacity: 0.6;
+      }
+      100% {
+        width: 200px;
+        height: 200px;
+        top: 80%;
+        left: 90%;
+        opacity: 0.8;
+      }
+    }
+
     .container {
       background: #1f1f1f;
       padding: 2rem;
@@ -23,6 +73,8 @@
       width: 90%;
       max-width: 400px;
       text-align: center;
+      position: relative;
+      z-index: 10;
     }
     input {
       width: 100%;
@@ -59,6 +111,13 @@
   </style>
 </head>
 <body>
+  <!-- Background Circles -->
+  <div class="circle" style="animation-delay: 0s;"></div>
+  <div class="circle" style="animation-delay: 2s;"></div>
+  <div class="circle" style="animation-delay: 4s;"></div>
+  <div class="circle" style="animation-delay: 6s;"></div>
+  <div class="circle" style="animation-delay: 8s;"></div>
+
   <div class="container">
     <h2>Register</h2>
     <input type="email" id="email" placeholder="Email" required />
