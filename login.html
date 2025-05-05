@@ -85,7 +85,7 @@
 
     onAuthStateChanged(auth, user => {
       if (user) {
-        window.location.href = "/";
+        window.location.href = "already-login";
       }
     });
 
@@ -94,7 +94,7 @@
       const password = document.getElementById("password").value;
 
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => window.location.href = "already-login")
+        .then(() => window.location.href = "/")
         .catch(error => alert(error.message));
     };
   </script>
