@@ -18,7 +18,6 @@
       position: relative;
     }
 
-    /* Add animated circles */
     .circle {
       position: absolute;
       border-radius: 50%;
@@ -28,41 +27,11 @@
     }
 
     @keyframes animateCircles {
-      0% {
-        width: 200px;
-        height: 200px;
-        top: 10%;
-        left: 10%;
-        opacity: 0.8;
-      }
-      25% {
-        width: 300px;
-        height: 300px;
-        top: 20%;
-        left: 40%;
-        opacity: 0.6;
-      }
-      50% {
-        width: 400px;
-        height: 400px;
-        top: 40%;
-        left: 60%;
-        opacity: 0.4;
-      }
-      75% {
-        width: 300px;
-        height: 300px;
-        top: 60%;
-        left: 80%;
-        opacity: 0.6;
-      }
-      100% {
-        width: 200px;
-        height: 200px;
-        top: 80%;
-        left: 90%;
-        opacity: 0.8;
-      }
+      0% { width: 200px; height: 200px; top: 10%; left: 10%; opacity: 0.8; }
+      25% { width: 300px; height: 300px; top: 20%; left: 40%; opacity: 0.6; }
+      50% { width: 400px; height: 400px; top: 40%; left: 60%; opacity: 0.4; }
+      75% { width: 300px; height: 300px; top: 60%; left: 80%; opacity: 0.6; }
+      100% { width: 200px; height: 200px; top: 80%; left: 90%; opacity: 0.8; }
     }
 
     .container {
@@ -76,6 +45,7 @@
       position: relative;
       z-index: 10;
     }
+
     input {
       width: 100%;
       padding: 12px;
@@ -85,6 +55,7 @@
       background-color: #2e2e2e;
       color: white;
     }
+
     button {
       padding: 12px 24px;
       background: #00ffcc;
@@ -96,15 +67,36 @@
       transition: background 0.3s;
       width: 100%;
     }
+
     button:hover {
       background: #00ddaa;
     }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: #ffffff;
+      color: #333;
+    }
+
+    .google-btn:hover {
+      background-color: #f0f0f0;
+    }
+
+    .separator {
+      margin: 20px 0;
+      color: #aaa;
+    }
+
     a {
       display: block;
       margin-top: 1rem;
       color: #00ffcc;
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
     }
@@ -122,13 +114,28 @@
     <h2>Register</h2>
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Password" required />
+    <input type="password" id="confirm-password" placeholder="Confirm Password" required />
     <button onclick="register()">Register</button>
+
+    <div class="separator">OR</div>
+
+    <button id="google-register" class="google-btn">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 20px;" />
+      Sign up with Google
+    </button>
+
     <a href="login.html">Already have an account? Login</a>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      onAuthStateChanged,
+      GoogleAuthProvider,
+      signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0w2CYNgPKciXQZ10h-vwnvW-8WmWiPdg",
@@ -141,6 +148,7 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
     onAuthStateChanged(auth, user => {
       if (user) {
@@ -151,11 +159,23 @@
     window.register = () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
 
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => window.location.href = "/")
         .catch(error => alert(error.message));
     };
+
+    document.getElementById("google-register").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then(() => window.location.href = "/")
+        .catch(error => alert(error.message));
+    });
   </script>
 </body>
 </html>
