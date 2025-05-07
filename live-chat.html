@@ -129,15 +129,15 @@
     onAuthStateChanged(auth, user => {
       if (user) {
         userName.textContent = `Welcome, ${user.displayName || "User"}`;
-        // You can load chat messages here
+        // Don't redirect if the user is logged in
       } else {
-        window.location.href = "login.html"; // Only redirect if NOT logged in
+        window.location.href = "login.html"; // Redirect to login if the user is not logged in
       }
     });
 
     window.logout = () => {
       signOut(auth).then(() => {
-        window.location.href = "login";
+        window.location.href = "login.html";
       });
     };
 
