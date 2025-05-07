@@ -1,101 +1,109 @@
-<!-- live-chat.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Live Chat | Neox</title>
   <link rel="stylesheet" href="default.css"/>
   <style>
     body {
       background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
-      font-family: Arial, sans-serif;
       color: #f1f1f1;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
       height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 50px;
+    }
+
+    .chat-container {
+      background: #1f1f1f;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
       display: flex;
       flex-direction: column;
     }
 
     .chat-header {
-      background-color: #1f1f1f;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
     }
 
     .chat-box {
-      flex: 1;
-      padding: 1rem;
+      height: 300px;
       overflow-y: auto;
-    }
-
-    .chat-message {
-      margin-bottom: 10px;
-      background: #2e2e2e;
+      background: #2a2a2a;
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 8px;
+      margin-bottom: 15px;
     }
 
     .chat-input {
       display: flex;
-      padding: 1rem;
-      border-top: 1px solid #333;
-      background-color: #1f1f1f;
+      gap: 10px;
     }
 
-    input {
+    input[type="text"] {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border: none;
       border-radius: 5px;
-      background: #2e2e2e;
+      background: #333;
       color: white;
     }
 
     button {
-      margin-left: 10px;
-      padding: 10px 20px;
-      background: #00ffcc;
+      padding: 12px 20px;
       border: none;
+      border-radius: 5px;
+      background-color: #00ffcc;
       color: black;
       font-weight: bold;
-      border-radius: 5px;
       cursor: pointer;
+      transition: background 0.3s;
     }
 
     button:hover {
-      background: #00ddaa;
+      background-color: #00ddaa;
+    }
+
+    .message {
+      margin: 5px 0;
     }
   </style>
 </head>
 <body>
-  <div class="chat-header">Live Chat</div>
-  <div id="chat-box" class="chat-box"></div>
-  <div class="chat-input">
-    <input type="text" id="message" placeholder="Type your message..." />
-    <button onclick="sendMessage()">Send</button>
+  <div class="chat-container">
+    <div class="chat-header">
+      <span id="userName">Welcome</span>
+      <button onclick="logout()">Logout</button>
+    </div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import {
-      getDatabase,
-      ref,
-      push,
-      onChildAdded
-    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
-    import {
       getAuth,
-      onAuthStateChanged
+      onAuthStateChanged,
+      signOut
     } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyABNtw-b-w0Cf4VIrWjLwSE1DUTZ3-JpxI",
       authDomain: "loginpage-55633.firebaseapp.com",
-      databaseURL: "https://loginpage-55633-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "loginpage-55633",
       storageBucket: "loginpage-55633.appspot.com",
       messagingSenderId: "112787874903",
@@ -103,41 +111,38 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
     const auth = getAuth(app);
 
-    let currentUser = null;
+    const userName = document.getElementById("userName");
 
     onAuthStateChanged(auth, user => {
-      if (!user) {
-        window.location.href = "login.html";
+      if (user) {
+        userName.textContent = `Welcome, ${user.displayName || "User"}`;
+        // You can load chat messages here
       } else {
-        currentUser = user;
+        window.location.href = "login.html"; // Only redirect if NOT logged in
       }
     });
 
-    const chatBox = document.getElementById("chat-box");
-
-    onChildAdded(ref(db, "messages"), snapshot => {
-      const data = snapshot.val();
-      const div = document.createElement("div");
-      div.className = "chat-message";
-      div.textContent = `${data.name}: ${data.message}`;
-      chatBox.appendChild(div);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    });
+    window.logout = () => {
+      signOut(auth).then(() => {
+        window.location.href = "login.html";
+      });
+    };
 
     window.sendMessage = () => {
-      const input = document.getElementById("message");
-      const text = input.value.trim();
-      if (!text || !currentUser) return;
+      const input = document.getElementById("messageInput");
+      const message = input.value.trim();
+      if (!message) return;
 
-      push(ref(db, "messages"), {
-        name: currentUser.displayName || "Anonymous",
-        message: text
-      });
+      const chatBox = document.getElementById("chatBox");
+      const msgElem = document.createElement("div");
+      msgElem.className = "message";
+      msgElem.textContent = message;
+      chatBox.appendChild(msgElem);
 
       input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
     };
   </script>
 </body>
