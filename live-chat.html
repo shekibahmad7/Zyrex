@@ -126,23 +126,26 @@
 
     const userName = document.getElementById("userName");
 
-    // Check auth state once, when the page loads.
+    // Function to check if the user is authenticated when the page loads
     window.onload = () => {
       const user = auth.currentUser;
+
       if (user) {
         userName.textContent = `Welcome, ${user.displayName || "User"}`;
-        // Do not redirect if the user is already logged in
+        // Keep the user on the live chat page if they are logged in
       } else {
         window.location.href = "login.html"; // Redirect to login if not logged in
       }
     };
 
+    // Function to log out the user
     window.logout = () => {
       signOut(auth).then(() => {
-        window.location.href = "login.html";
+        window.location.href = "login.html"; // Redirect to login after logging out
       });
     };
 
+    // Function to send a message
     window.sendMessage = () => {
       const input = document.getElementById("messageInput");
       const message = input.value.trim();
