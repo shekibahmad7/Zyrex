@@ -77,6 +77,17 @@
 
     .message {
       margin: 5px 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message span {
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .message p {
+      margin: 0;
     }
   </style>
 </head>
@@ -126,7 +137,7 @@
 
     window.logout = () => {
       signOut(auth).then(() => {
-        window.location.href = "login.html";
+        window.location.href = "login";
       });
     };
 
@@ -136,9 +147,16 @@
       if (!message) return;
 
       const chatBox = document.getElementById("chatBox");
+
+      // Get the user's name from the auth state
+      const currentUser = auth.currentUser;
+      const userDisplayName = currentUser ? currentUser.displayName || "User" : "Guest";
+
+      // Create the message element with the user's name
       const msgElem = document.createElement("div");
       msgElem.className = "message";
-      msgElem.textContent = message;
+      msgElem.innerHTML = `<span>${userDisplayName}</span><p>${message}</p>`;
+      
       chatBox.appendChild(msgElem);
 
       input.value = "";
