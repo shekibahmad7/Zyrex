@@ -48,10 +48,16 @@
 
     .chat-input {
       display: flex;
+      flex-direction: column;
       gap: 10px;
     }
 
-    input[type="text"] {
+    .chat-input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"], input[type="file"] {
       flex: 1;
       padding: 12px;
       border: none;
@@ -77,10 +83,19 @@
 
     .message {
       margin: 5px 0;
+      padding: 5px 10px;
+      background: #3a3a3a;
+      border-radius: 5px;
     }
 
     .message strong {
       color: #00ffcc;
+    }
+
+    .message img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-top: 5px;
     }
   </style>
 </head>
@@ -92,8 +107,11 @@
     </div>
     <div class="chat-box" id="chatBox"></div>
     <div class="chat-input">
-      <input type="text" id="messageInput" placeholder="Type your message..." />
-      <button onclick="sendMessage()">Send</button>
+      <div class="chat-input-row">
+        <input type="text" id="messageInput" placeholder="Type your message..." />
+        <input type="file" id="imageInput" accept="image/*" />
+        <button onclick="sendMessage()">Send</button>
+      </div>
     </div>
   </div>
 
@@ -104,10 +122,25 @@
       onAuthStateChanged,
       signOut
     } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import {
+      getDatabase,
+      ref,
+      push,
+      onChildAdded,
+      remove,
+      set
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+    import {
+      getStorage,
+      ref as sRef,
+      uploadBytes,
+      getDownloadURL
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyABNtw-b-w0Cf4VIrWjLwSE1DUTZ3-JpxI",
       authDomain: "loginpage-55633.firebaseapp.com",
+      databaseURL: "https://loginpage-55633-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "loginpage-55633",
       storageBucket: "loginpage-55633.appspot.com",
       messagingSenderId: "112787874903",
@@ -116,15 +149,18 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-
+    const db = getDatabase(app);
+    const storage = getStorage(app);
     const userName = document.getElementById("userName");
+    const chatBox = document.getElementById("chatBox");
 
     let currentUser = null;
 
     onAuthStateChanged(auth, user => {
       if (user) {
         currentUser = user;
-        userName.textContent = `Welcome, ${user.displayName || user.email || "User"}`;
+        userName.textContent = `Welcome, ${user.displayName || "User"}`;
+        loadMessages();
       } else {
         window.location.href = "login.html";
       }
@@ -136,21 +172,47 @@
       });
     };
 
-    window.sendMessage = () => {
-      const input = document.getElementById("messageInput");
-      const message = input.value.trim();
-      if (!message || !currentUser) return;
+    function loadMessages() {
+      const messagesRef = ref(db, "messages");
+      onChildAdded(messagesRef, snapshot => {
+        const data = snapshot.val();
+        const msgElem = document.createElement("div");
+        msgElem.className = "message";
+        msgElem.innerHTML = `<strong>${data.sender}:</strong> ${data.text || ""}`;
+        if (data.imageURL) {
+          msgElem.innerHTML += `<br><img src="${data.imageURL}" alt="Image"/>`;
+        }
+        chatBox.appendChild(msgElem);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+    }
 
-      const senderName = currentUser.displayName || currentUser.email || "Anonymous";
+    window.sendMessage = async () => {
+      const messageInput = document.getElementById("messageInput");
+      const imageInput = document.getElementById("imageInput");
+      const text = messageInput.value.trim();
+      const file = imageInput.files[0];
 
-      const chatBox = document.getElementById("chatBox");
-      const msgElem = document.createElement("div");
-      msgElem.className = "message";
-      msgElem.innerHTML = `<strong>${senderName}:</strong> ${message}`;
-      chatBox.appendChild(msgElem);
+      if (!text && !file) return;
 
-      input.value = "";
-      chatBox.scrollTop = chatBox.scrollHeight;
+      const messagesRef = ref(db, "messages");
+      const messageData = {
+        sender: currentUser.displayName || "Anonymous",
+        text: text,
+        timestamp: Date.now()
+      };
+
+      if (file) {
+        const fileRef = sRef(storage, "images/" + Date.now() + "-" + file.name);
+        await uploadBytes(fileRef, file);
+        const url = await getDownloadURL(fileRef);
+        messageData.imageURL = url;
+      }
+
+      push(messagesRef, messageData);
+
+      messageInput.value = "";
+      imageInput.value = "";
     };
   </script>
 </body>
