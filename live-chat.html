@@ -78,6 +78,10 @@
     .message {
       margin: 5px 0;
     }
+
+    .message strong {
+      color: #00ffcc;
+    }
   </style>
 </head>
 <body>
@@ -115,33 +119,34 @@
 
     const userName = document.getElementById("userName");
 
-    // Check user status and load chat
+    let currentUser = null;
+
     onAuthStateChanged(auth, user => {
       if (user) {
-        userName.textContent = `Welcome, ${user.displayName || "User"}`;
+        currentUser = user;
+        userName.textContent = `Welcome, ${user.displayName || user.email || "User"}`;
       } else {
-        // If user is not logged in, redirect to login page
         window.location.href = "login.html";
       }
     });
 
-    // Logout functionality
     window.logout = () => {
       signOut(auth).then(() => {
         window.location.href = "login.html";
       });
     };
 
-    // Send message functionality
     window.sendMessage = () => {
       const input = document.getElementById("messageInput");
       const message = input.value.trim();
-      if (!message) return;
+      if (!message || !currentUser) return;
+
+      const senderName = currentUser.displayName || currentUser.email || "Anonymous";
 
       const chatBox = document.getElementById("chatBox");
       const msgElem = document.createElement("div");
       msgElem.className = "message";
-      msgElem.textContent = message;
+      msgElem.innerHTML = `<strong>${senderName}:</strong> ${message}`;
       chatBox.appendChild(msgElem);
 
       input.value = "";
