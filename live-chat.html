@@ -48,16 +48,10 @@
 
     .chat-input {
       display: flex;
-      flex-direction: column;
       gap: 10px;
     }
 
-    .chat-input-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    input[type="text"], input[type="file"] {
+    input[type="text"] {
       flex: 1;
       padding: 12px;
       border: none;
@@ -83,19 +77,22 @@
 
     .message {
       margin: 5px 0;
-      padding: 5px 10px;
-      background: #3a3a3a;
-      border-radius: 5px;
     }
 
-    .message strong {
-      color: #00ffcc;
-    }
+    @media (max-width: 600px) {
+      .chat-container {
+        width: 100%;
+        padding: 10px;
+      }
 
-    .message img {
-      max-width: 100%;
-      border-radius: 5px;
-      margin-top: 5px;
+      .chat-input {
+        flex-direction: column;
+      }
+
+      .chat-input input[type="text"],
+      .chat-input button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -107,11 +104,8 @@
     </div>
     <div class="chat-box" id="chatBox"></div>
     <div class="chat-input">
-      <div class="chat-input-row">
-        <input type="text" id="messageInput" placeholder="Type your message..." />
-        <input type="file" id="imageInput" accept="image/*" />
-        <button onclick="sendMessage()">Send</button>
-      </div>
+      <input type="text" id="messageInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
     </div>
   </div>
 
@@ -126,41 +120,33 @@
       getDatabase,
       ref,
       push,
-      onChildAdded,
-      remove,
-      set
+      onChildAdded
     } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
-    import {
-      getStorage,
-      ref as sRef,
-      uploadBytes,
-      getDownloadURL
-    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyABNtw-b-w0Cf4VIrWjLwSE1DUTZ3-JpxI",
       authDomain: "loginpage-55633.firebaseapp.com",
-      databaseURL: "https://loginpage-55633-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "loginpage-55633",
       storageBucket: "loginpage-55633.appspot.com",
       messagingSenderId: "112787874903",
-      appId: "1:112787874903:android:00890b5c3a679cb440af12"
+      appId: "1:112787874903:android:00890b5c3a679cb440af12",
+      databaseURL: "https://loginpage-55633-default-rtdb.asia-southeast1.firebasedatabase.app"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getDatabase(app);
-    const storage = getStorage(app);
-    const userName = document.getElementById("userName");
+    const messagesRef = ref(db, "messages");
+
+    const userNameElem = document.getElementById("userName");
     const chatBox = document.getElementById("chatBox");
 
     let currentUser = null;
 
-    onAuthStateChanged(auth, user => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         currentUser = user;
-        userName.textContent = `Welcome, ${user.displayName || "User"}`;
-        loadMessages();
+        userNameElem.textContent = `Welcome, ${user.displayName || "User"}`;
       } else {
         window.location.href = "login.html";
       }
@@ -172,48 +158,28 @@
       });
     };
 
-    function loadMessages() {
-      const messagesRef = ref(db, "messages");
-      onChildAdded(messagesRef, snapshot => {
-        const data = snapshot.val();
-        const msgElem = document.createElement("div");
-        msgElem.className = "message";
-        msgElem.innerHTML = `<strong>${data.sender}:</strong> ${data.text || ""}`;
-        if (data.imageURL) {
-          msgElem.innerHTML += `<br><img src="${data.imageURL}" alt="Image"/>`;
-        }
-        chatBox.appendChild(msgElem);
-        chatBox.scrollTop = chatBox.scrollHeight;
-      });
-    }
+    window.sendMessage = () => {
+      const input = document.getElementById("messageInput");
+      const message = input.value.trim();
+      if (!message || !currentUser) return;
 
-    window.sendMessage = async () => {
-      const messageInput = document.getElementById("messageInput");
-      const imageInput = document.getElementById("imageInput");
-      const text = messageInput.value.trim();
-      const file = imageInput.files[0];
-
-      if (!text && !file) return;
-
-      const messagesRef = ref(db, "messages");
-      const messageData = {
-        sender: currentUser.displayName || "Anonymous",
-        text: text,
+      push(messagesRef, {
+        name: currentUser.displayName || "User",
+        text: message,
         timestamp: Date.now()
-      };
+      });
 
-      if (file) {
-        const fileRef = sRef(storage, "images/" + Date.now() + "-" + file.name);
-        await uploadBytes(fileRef, file);
-        const url = await getDownloadURL(fileRef);
-        messageData.imageURL = url;
-      }
-
-      push(messagesRef, messageData);
-
-      messageInput.value = "";
-      imageInput.value = "";
+      input.value = "";
     };
+
+    onChildAdded(messagesRef, (snapshot) => {
+      const data = snapshot.val();
+      const msgElem = document.createElement("div");
+      msgElem.className = "message";
+      msgElem.innerHTML = `<strong>${data.name}:</strong> ${data.text}`;
+      chatBox.appendChild(msgElem);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
   </script>
 </body>
 </html>
