@@ -77,17 +77,6 @@
 
     .message {
       margin: 5px 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .message span {
-      font-weight: bold;
-      color: #00ffcc;
-    }
-
-    .message p {
-      margin: 0;
     }
   </style>
 </head>
@@ -126,42 +115,33 @@
 
     const userName = document.getElementById("userName");
 
-    // Function to check if the user is authenticated when the page loads
-    window.onload = () => {
-      const user = auth.currentUser;
-
+    // Check user status and load chat
+    onAuthStateChanged(auth, user => {
       if (user) {
         userName.textContent = `Welcome, ${user.displayName || "User"}`;
-        // Keep the user on the live chat page if they are logged in
       } else {
-        window.location.href = "login.html"; // Redirect to login if not logged in
+        // If user is not logged in, redirect to login page
+        window.location.href = "login.html";
       }
-    };
+    });
 
-    // Function to log out the user
+    // Logout functionality
     window.logout = () => {
       signOut(auth).then(() => {
-        window.location.href = "login.html"; // Redirect to login after logging out
+        window.location.href = "login.html";
       });
     };
 
-    // Function to send a message
+    // Send message functionality
     window.sendMessage = () => {
       const input = document.getElementById("messageInput");
       const message = input.value.trim();
       if (!message) return;
 
       const chatBox = document.getElementById("chatBox");
-
-      // Get the user's name from the auth state
-      const currentUser = auth.currentUser;
-      const userDisplayName = currentUser ? currentUser.displayName || "User" : "Guest";
-
-      // Create the message element with the user's name
       const msgElem = document.createElement("div");
       msgElem.className = "message";
-      msgElem.innerHTML = `<span>${userDisplayName}</span><p>${message}</p>`;
-      
+      msgElem.textContent = message;
       chatBox.appendChild(msgElem);
 
       input.value = "";
