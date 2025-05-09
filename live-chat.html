@@ -5,34 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Live Chat | Neox</title>
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100dvh;
       background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
       color: #f1f1f1;
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: 100vh;
     }
 
     .chat-container {
-      background: #1f1f1f;
-      width: 100%;
-      max-width: 600px;
-      flex-grow: 1;
       display: flex;
       flex-direction: column;
-      padding: 15px;
+      height: 100dvh;
+      max-width: 600px;
+      margin: auto;
       box-sizing: border-box;
     }
 
     .chat-header {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-bottom: 10px;
       text-align: center;
+      padding: 12px;
+      background-color: #1f1f1f;
+      font-size: 1.2em;
+      font-weight: bold;
+      flex-shrink: 0;
     }
 
     .chat-box {
@@ -40,13 +37,12 @@
       overflow-y: auto;
       background: #2a2a2a;
       padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
+      box-sizing: border-box;
     }
 
     .message {
       margin: 8px 0;
-      padding: 6px;
+      padding: 8px;
       border-radius: 6px;
       background: #333;
       position: relative;
@@ -60,8 +56,8 @@
 
     .message button {
       position: absolute;
-      top: 4px;
-      right: 4px;
+      top: 6px;
+      right: 6px;
       background: transparent;
       border: none;
       color: #ff4d4d;
@@ -73,6 +69,10 @@
       display: flex;
       flex-direction: row;
       gap: 8px;
+      padding: 10px;
+      background-color: #1f1f1f;
+      flex-shrink: 0;
+      box-sizing: border-box;
     }
 
     input[type="text"] {
@@ -93,7 +93,6 @@
       color: black;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
     button.send-btn:hover {
@@ -101,17 +100,14 @@
     }
 
     @media (max-width: 600px) {
-      .chat-container {
-        padding: 10px;
-      }
-
       .chat-input {
-        flex-direction: column;
+        flex-direction: row;
+        padding: 8px;
       }
 
       input[type="text"],
       button.send-btn {
-        width: 100%;
+        font-size: 1em;
       }
     }
   </style>
@@ -164,7 +160,6 @@
     }
     welcomeText.textContent = `Welcome, ${userName}`;
 
-    // Send message
     window.sendMessage = () => {
       const message = input.value.trim();
       if (!message) return;
@@ -178,7 +173,6 @@
       input.value = "";
     };
 
-    // Show message
     onChildAdded(messagesRef, (snapshot) => {
       const data = snapshot.val();
       const msgId = snapshot.key;
@@ -192,7 +186,6 @@
       msgElem.innerHTML = `<strong>${data.name}</strong>: ${data.text}
         <span class="timestamp">${timeString}</span>`;
 
-      // Show delete button only for sender
       if (data.name === userName) {
         const delBtn = document.createElement("button");
         delBtn.textContent = "×";
