@@ -127,7 +127,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0w2CYNgPKciXQZ10h-vwnvW-8WmWiPdg",
@@ -140,12 +140,6 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        window.location.href = "already-login";
-      }
-    });
 
     window.login = () => {
       const email = document.getElementById("email").value;
