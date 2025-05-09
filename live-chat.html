@@ -143,11 +143,13 @@
 
     let currentUser = null;
 
+    // Check if the user is authenticated
     onAuthStateChanged(auth, (user) => {
       if (user) {
         currentUser = user;
         userNameElem.textContent = `Welcome, ${user.displayName || "User"}`;
       } else {
+        // If no user is logged in, redirect to login page
         window.location.href = "login.html";
       }
     });
