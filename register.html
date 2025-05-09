@@ -6,79 +6,119 @@
   <title>Register | Neox</title>
   <link rel="stylesheet" href="default.css"/>
   <style>
+    /* Keep your original internal styles here */
     body {
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
+      color: #f1f1f1;
       font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #2c3e50, #3498db);
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      margin: 0;
+      overflow: hidden;
+      position: relative;
     }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 255, 204, 0.2);
+      animation: animateCircles 10s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes animateCircles {
+      0% { width: 200px; height: 200px; top: 10%; left: 10%; opacity: 0.8; }
+      25% { width: 300px; height: 300px; top: 20%; left: 40%; opacity: 0.6; }
+      50% { width: 400px; height: 400px; top: 40%; left: 60%; opacity: 0.4; }
+      75% { width: 300px; height: 300px; top: 60%; left: 80%; opacity: 0.6; }
+      100% { width: 200px; height: 200px; top: 80%; left: 90%; opacity: 0.8; }
+    }
+
     .container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      width: 100%;
+      background: #1f1f1f;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+      width: 90%;
       max-width: 400px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
       text-align: center;
+      position: relative;
+      z-index: 10;
     }
     input {
-      width: 90%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    button {
-      width: 95%;
+      width: 100%;
       padding: 12px;
       margin: 10px 0;
       border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    #email-btn {
-      background-color: #2196f3;
+      border-radius: 5px;
+      background-color: #2e2e2e;
       color: white;
     }
+    button {
+      padding: 12px 24px;
+      background: #00ffcc;
+      border: none;
+      color: black;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+    }
+    button:hover {
+      background: #00ddaa;
+    }
+    a {
+      display: block;
+      margin-top: 1rem;
+      color: #00ffcc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .or-divider {
+      margin: 15px 0;
+      color: #aaa;
+    }
+
     .google-btn {
-      background-color: #f1f1f1;
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
+      background: #fff;
+      color: #000;
+      font-weight: bold;
     }
+
     .google-btn img {
       width: 20px;
-      margin-right: 8px;
+      height: 20px;
     }
-    .or-divider {
-      margin: 15px 0;
-      font-weight: bold;
-      color: #666;
-    }
-    .logout-btn {
-      background-color: #e74c3c;
+
+    #logout-btn {
+      margin-top: 15px;
+      background-color: #ff4444;
       color: white;
-    }
-    .logged-email {
-      background-color: #2196f3 !important;
-      color: white !important;
-    }
-    .logged-google {
-      background-color: #4caf50 !important;
-      color: white !important;
     }
   </style>
 </head>
 <body>
+  <!-- Background Circles -->
+  <div class="circle" style="animation-delay: 0s;"></div>
+  <div class="circle" style="animation-delay: 2s;"></div>
+  <div class="circle" style="animation-delay: 4s;"></div>
+  <div class="circle" style="animation-delay: 6s;"></div>
+  <div class="circle" style="animation-delay: 8s;"></div>
+
   <div class="container">
     <h2>Register</h2>
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Password" required />
-    <button onclick="register()" id="email-btn">Register</button>
+    <button id="email-btn" onclick="register()">Register</button>
 
     <div class="or-divider">OR</div>
     <button id="google-register" class="google-btn">
@@ -86,8 +126,9 @@
       Sign up with Google
     </button>
 
+    <button id="logout-btn" style="display: none;" onclick="logout()">Logout</button>
+
     <a href="login.html">Already have an account? Login</a>
-    <button id="logout" class="logout-btn" style="display: none;">Logout</button>
   </div>
 
   <script type="module">
@@ -129,18 +170,22 @@
         .catch(error => alert("Google Sign-Up failed: " + error.message));
     });
 
-    document.getElementById("logout").addEventListener("click", () => {
+    window.logout = () => {
       signOut(auth).then(() => location.reload());
-    });
+    };
 
-    onAuthStateChanged(auth, user => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
-        document.getElementById("logout").style.display = "block";
+        const emailBtn = document.getElementById("email-btn");
+        const googleBtn = document.getElementById("google-register");
+        const logoutBtn = document.getElementById("logout-btn");
+
+        logoutBtn.style.display = "block";
 
         if (user.providerData.some(p => p.providerId === "google.com")) {
-          document.getElementById("google-register").classList.add("logged-google");
+          googleBtn.textContent += " (Logined)";
         } else {
-          document.getElementById("email-btn").classList.add("logged-email");
+          emailBtn.textContent += " (Logined)";
         }
       }
     });
