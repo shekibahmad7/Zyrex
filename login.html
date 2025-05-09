@@ -146,8 +146,14 @@
       const password = document.getElementById("password").value;
 
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => window.location.href = "/")
-        .catch(error => alert(error.message));
+        .then(() => {
+          // Redirect to the homepage or desired page after successful login
+          window.location.href = "chat.html";  // You can adjust the target page here
+        })
+        .catch(error => {
+          // Improved error handling
+          alert("Error: " + error.message);
+        });
     };
   </script>
 </body>
