@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Live Chat | Neox</title>
-  <link rel="stylesheet" href="default.css"/>
   <style>
     body {
       background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
@@ -108,11 +107,14 @@
       <span id="userName">Welcome</span>
       <button onclick="logout()">Logout</button>
     </div>
+
     <div class="chat-box" id="chatBox"></div>
-    <div class="chat-input">
+
+    <div class="chat-input" id="chatInputContainer" style="display: none;">
       <input type="text" id="messageInput" placeholder="Type your message..." />
       <button onclick="sendMessage()">Send</button>
     </div>
+
     <div id="loginMessage" style="display: none;">
       <p>You need to <span class="login-link" onclick="redirectToLogin()">log in or sign up</span> to send a message.</p>
     </div>
@@ -150,6 +152,7 @@
     const userNameElem = document.getElementById("userName");
     const chatBox = document.getElementById("chatBox");
     const loginMessage = document.getElementById("loginMessage");
+    const chatInputContainer = document.getElementById("chatInputContainer");
 
     let currentUser = null;
 
@@ -157,10 +160,13 @@
       if (user) {
         currentUser = user;
         userNameElem.textContent = `Welcome, ${user.displayName || "User"}`;
-        loginMessage.style.display = "none";  // Hide login prompt
+        loginMessage.style.display = "none";
+        chatInputContainer.style.display = "flex";
       } else {
         currentUser = null;
-        loginMessage.style.display = "block"; // Show login prompt
+        userNameElem.textContent = "Welcome";
+        loginMessage.style.display = "block";
+        chatInputContainer.style.display = "none";
       }
     });
 
