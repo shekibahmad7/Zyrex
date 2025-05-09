@@ -136,7 +136,8 @@
           return updateProfile(userCredential.user, { displayName: name });
         })
         .then(() => {
-          window.location.href = "/";
+          // No redirect here after successful registration
+          alert("Registration successful! You can now log in.");
         })
         .catch(error => {
           alert(error.message);
