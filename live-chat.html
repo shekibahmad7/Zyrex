@@ -9,58 +9,84 @@
       background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
       color: #f1f1f1;
       font-family: Arial, sans-serif;
-      height: 100vh;
       margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding-top: 50px;
+      height: 100vh;
     }
 
     .chat-container {
       background: #1f1f1f;
-      width: 90%;
+      width: 100%;
       max-width: 600px;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
+      padding: 15px;
+      box-sizing: border-box;
     }
 
     .chat-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      text-align: center;
     }
 
     .chat-box {
-      height: 300px;
+      flex-grow: 1;
       overflow-y: auto;
       background: #2a2a2a;
       padding: 10px;
       border-radius: 8px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
+    }
+
+    .message {
+      margin: 8px 0;
+      padding: 6px;
+      border-radius: 6px;
+      background: #333;
+      position: relative;
+    }
+
+    .message .timestamp {
+      font-size: 0.75em;
+      color: #aaa;
+      margin-left: 8px;
+    }
+
+    .message button {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: transparent;
+      border: none;
+      color: #ff4d4d;
+      cursor: pointer;
+      font-size: 0.9em;
     }
 
     .chat-input {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      flex-direction: row;
+      gap: 8px;
     }
 
     input[type="text"] {
-      padding: 12px;
+      flex: 1;
+      padding: 10px;
       border: none;
       border-radius: 5px;
       background: #333;
       color: white;
+      font-size: 1em;
     }
 
-    button {
-      padding: 12px 20px;
+    button.send-btn {
+      padding: 10px 16px;
       border: none;
       border-radius: 5px;
       background-color: #00ffcc;
@@ -70,28 +96,21 @@
       transition: background 0.3s;
     }
 
-    button:hover {
+    button.send-btn:hover {
       background-color: #00ddaa;
-    }
-
-    .message {
-      margin: 5px 0;
-    }
-
-    .timestamp {
-      font-size: 0.8em;
-      color: #aaa;
-      margin-left: 5px;
     }
 
     @media (max-width: 600px) {
       .chat-container {
-        width: 100%;
         padding: 10px;
       }
 
-      .chat-input input,
-      .chat-input button {
+      .chat-input {
+        flex-direction: column;
+      }
+
+      input[type="text"],
+      button.send-btn {
         width: 100%;
       }
     }
@@ -99,15 +118,11 @@
 </head>
 <body>
   <div class="chat-container">
-    <div class="chat-header">
-      <span id="welcomeName">Welcome!</span>
-    </div>
-
+    <div class="chat-header" id="welcomeText">Welcome</div>
     <div class="chat-box" id="chatBox"></div>
-
     <div class="chat-input">
       <input type="text" id="messageInput" placeholder="Type your message..." />
-      <button onclick="sendMessage()">Send</button>
+      <button class="send-btn" onclick="sendMessage()">Send</button>
     </div>
   </div>
 
@@ -117,7 +132,9 @@
       getDatabase,
       ref,
       push,
-      onChildAdded
+      onChildAdded,
+      remove,
+      child
     } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
     const firebaseConfig = {
@@ -135,27 +152,21 @@
     const messagesRef = ref(db, "messages");
 
     const chatBox = document.getElementById("chatBox");
-    const messageInput = document.getElementById("messageInput");
-    const welcomeName = document.getElementById("welcomeName");
+    const input = document.getElementById("messageInput");
+    const welcomeText = document.getElementById("welcomeText");
 
-    // Ask for name only once
-    let userName = localStorage.getItem("chatUserName");
-
+    // Ask for name once
+    let userName = localStorage.getItem("chatName");
     if (!userName) {
       userName = prompt("Enter your name:");
-      if (userName) {
-        localStorage.setItem("chatUserName", userName);
-      } else {
-        userName = "Anonymous";
-        localStorage.setItem("chatUserName", userName);
-      }
+      if (!userName) userName = "Guest";
+      localStorage.setItem("chatName", userName);
     }
-
-    welcomeName.textContent = `Welcome, ${userName}`;
+    welcomeText.textContent = `Welcome, ${userName}`;
 
     // Send message
     window.sendMessage = () => {
-      const message = messageInput.value.trim();
+      const message = input.value.trim();
       if (!message) return;
 
       push(messagesRef, {
@@ -164,15 +175,34 @@
         timestamp: Date.now()
       });
 
-      messageInput.value = "";
+      input.value = "";
     };
 
-    // Show messages
+    // Show message
     onChildAdded(messagesRef, (snapshot) => {
       const data = snapshot.val();
+      const msgId = snapshot.key;
+
       const msgElem = document.createElement("div");
       msgElem.className = "message";
-      msgElem.innerHTML = `<strong>${data.name}:</strong> ${data.text}`;
+
+      const time = new Date(data.timestamp);
+      const timeString = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`;
+
+      msgElem.innerHTML = `<strong>${data.name}</strong>: ${data.text}
+        <span class="timestamp">${timeString}</span>`;
+
+      // Show delete button only for sender
+      if (data.name === userName) {
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "×";
+        delBtn.onclick = () => {
+          remove(child(messagesRef, msgId));
+          msgElem.remove();
+        };
+        msgElem.appendChild(delBtn);
+      }
+
       chatBox.appendChild(msgElem);
       chatBox.scrollTop = chatBox.scrollHeight;
     });
