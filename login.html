@@ -107,6 +107,26 @@
     a:hover {
       text-decoration: underline;
     }
+
+    .or-divider {
+      margin: 15px 0;
+      color: #aaa;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #fff;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
   </style>
 </head>
 <body>
@@ -122,12 +142,25 @@
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Password" required />
     <button onclick="login()">Login</button>
+
+    <div class="or-divider">OR</div>
+    <button id="google-login" class="google-btn">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" />
+      Sign in with Google
+    </button>
+
     <a href="register.html">Don't have an account? Register</a>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signInWithPopup,
+      GoogleAuthProvider,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0w2CYNgPKciXQZ10h-vwnvW-8WmWiPdg",
@@ -140,21 +173,26 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    onAuthStateChanged(auth, user => {
+      if (user) window.location.href = "/";
+    });
 
     window.login = () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          // Redirect to the homepage or desired page after successful login
-          window.location.href = "live-chat.html";  // You can adjust the target page here
-        })
-        .catch(error => {
-          // Improved error handling
-          alert("Error: " + error.message);
-        });
+        .then(() => window.location.href = "/")
+        .catch(error => alert(error.message));
     };
+
+    document.getElementById("google-login").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then(() => window.location.href = "/")
+        .catch(error => alert("Google Sign-In failed: " + error.message));
+    });
   </script>
 </body>
 </html>
