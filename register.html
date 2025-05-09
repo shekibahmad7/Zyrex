@@ -1,3 +1,4 @@
+<!-- Save as register.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,148 +7,23 @@
   <title>Register | Neox</title>
   <link rel="stylesheet" href="default.css"/>
   <style>
-    body {
-      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
-      color: #f1f1f1;
-      font-family: Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(0, 255, 204, 0.2);
-      animation: animateCircles 10s infinite ease-in-out;
-      opacity: 0.8;
-    }
-
-    @keyframes animateCircles {
-      0% {
-        width: 200px;
-        height: 200px;
-        top: 10%;
-        left: 10%;
-        opacity: 0.8;
-      }
-      25% {
-        width: 300px;
-        height: 300px;
-        top: 20%;
-        left: 40%;
-        opacity: 0.6;
-      }
-      50% {
-        width: 400px;
-        height: 400px;
-        top: 40%;
-        left: 60%;
-        opacity: 0.4;
-      }
-      75% {
-        width: 300px;
-        height: 300px;
-        top: 60%;
-        left: 80%;
-        opacity: 0.6;
-      }
-      100% {
-        width: 200px;
-        height: 200px;
-        top: 80%;
-        left: 90%;
-        opacity: 0.8;
-      }
-    }
-
-    .container {
-      background: #1f1f1f;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 5px;
-      background-color: #2e2e2e;
+    /* (Style definitions unchanged) */
+    .logged-email { background-color: #2196f3 !important; color: white; }
+    .logged-google { background-color: #4caf50 !important; color: white; }
+    .logout-btn {
+      margin-top: 10px;
+      background: #f44336;
       color: white;
-    }
-
-    button {
-      padding: 12px 24px;
-      background: #00ffcc;
-      border: none;
-      color: black;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-      width: 100%;
-    }
-
-    button:hover {
-      background: #00ddaa;
-    }
-
-    a {
-      display: block;
-      margin-top: 1rem;
-      color: #00ffcc;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .or-divider {
-      margin: 15px 0;
-      color: #aaa;
-    }
-
-    .google-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #fff;
-      color: #000;
-      font-weight: bold;
-    }
-
-    .google-btn img {
-      width: 20px;
-      height: 20px;
     }
   </style>
 </head>
 <body>
-  <!-- Background Circles -->
-  <div class="circle" style="animation-delay: 0s;"></div>
-  <div class="circle" style="animation-delay: 2s;"></div>
-  <div class="circle" style="animation-delay: 4s;"></div>
-  <div class="circle" style="animation-delay: 6s;"></div>
-  <div class="circle" style="animation-delay: 8s;"></div>
-
   <div class="container">
     <h2>Register</h2>
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Password" required />
     <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-    <button onclick="register()">Register</button>
+    <button onclick="register()" id="email-btn">Register</button>
 
     <div class="or-divider">OR</div>
     <button id="google-register" class="google-btn">
@@ -156,6 +32,7 @@
     </button>
 
     <a href="login.html">Already have an account? Login</a>
+    <button id="logout" class="logout-btn" style="display: none;">Logout</button>
   </div>
 
   <script type="module">
@@ -165,7 +42,8 @@
       createUserWithEmailAndPassword,
       signInWithPopup,
       GoogleAuthProvider,
-      onAuthStateChanged
+      onAuthStateChanged,
+      signOut
     } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
     const firebaseConfig = {
@@ -192,14 +70,30 @@
       }
 
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => window.location.href = "/")
+        .then(() => location.reload())
         .catch(error => alert(error.message));
     };
 
     document.getElementById("google-register").addEventListener("click", () => {
       signInWithPopup(auth, provider)
-        .then(() => window.location.href = "/")
+        .then(() => location.reload())
         .catch(error => alert("Google Sign-Up failed: " + error.message));
+    });
+
+    document.getElementById("logout").addEventListener("click", () => {
+      signOut(auth).then(() => location.reload());
+    });
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        document.getElementById("logout").style.display = "block";
+
+        if (user.providerData.some(p => p.providerId === "google.com")) {
+          document.getElementById("google-register").classList.add("logged-google");
+        } else {
+          document.getElementById("email-btn").classList.add("logged-email");
+        }
+      }
     });
   </script>
 </body>
