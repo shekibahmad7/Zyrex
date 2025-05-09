@@ -1,123 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <style>
-        /* Your internal CSS goes here */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f9;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .form-container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .google-btn {
-            background-color: #34a853;
-            color: white;
-        }
-        .email-btn {
-            background-color: #4285f4;
-            color: white;
-        }
-        .logout-btn {
-            background-color: #db4437;
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Neox</title>
+  <link rel="stylesheet" href="default.css"/>
+  <style>
+    body {
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
+      color: #f1f1f1;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 255, 204, 0.2);
+      animation: animateCircles 10s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes animateCircles {
+      0% {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: 10%;
+        opacity: 0.8;
+      }
+      25% {
+        width: 300px;
+        height: 300px;
+        top: 20%;
+        left: 40%;
+        opacity: 0.6;
+      }
+      50% {
+        width: 400px;
+        height: 400px;
+        top: 40%;
+        left: 60%;
+        opacity: 0.4;
+      }
+      75% {
+        width: 300px;
+        height: 300px;
+        top: 60%;
+        left: 80%;
+        opacity: 0.6;
+      }
+      100% {
+        width: 200px;
+        height: 200px;
+        top: 80%;
+        left: 90%;
+        opacity: 0.8;
+      }
+    }
+
+    .container {
+      background: #1f1f1f;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #2e2e2e;
+      color: white;
+    }
+    button {
+      padding: 12px 24px;
+      background: #00ffcc;
+      border: none;
+      color: black;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+    }
+    button:hover {
+      background: #00ddaa;
+    }
+    a {
+      display: block;
+      margin-top: 1rem;
+      color: #00ffcc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .or-divider {
+      margin: 15px 0;
+      color: #aaa;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #fff;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
-            <button id="google-login-btn" class="google-btn">Login with Google</button>
-            <button id="email-login-btn" class="email-btn">Login with Email</button>
-            <button id="logout-btn" class="logout-btn" style="display: none;">Logout</button>
-        </div>
-    </div>
+  <!-- Background Circles -->
+  <div class="circle" style="animation-delay: 0s;"></div>
+  <div class="circle" style="animation-delay: 2s;"></div>
+  <div class="circle" style="animation-delay: 4s;"></div>
+  <div class="circle" style="animation-delay: 6s;"></div>
+  <div class="circle" style="animation-delay: 8s;"></div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js"></script>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyABNtw-b-w0Cf4VIrWjLwSE1DUTZ3-JpxI",
-            authDomain: "loginpage-55633.firebaseapp.com",
-            databaseURL: "https://loginpage-55633-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "loginpage-55633",
-            storageBucket: "loginpage-55633.appspot.com",
-            messagingSenderId: "112787874903",
-            appId: "1:112787874903:web:00890b5c3a679cb440af12",
-            measurementId: "G-XYZ123"
-        };
-        
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+  <div class="container">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="login()">Login</button>
 
-        const googleLoginBtn = document.getElementById('google-login-btn');
-        const emailLoginBtn = document.getElementById('email-login-btn');
-        const logoutBtn = document.getElementById('logout-btn');
+    <div class="or-divider">OR</div>
+    <button id="google-login" class="google-btn">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" />
+      Sign in with Google
+    </button>
 
-        function updateUI(user) {
-            if (user) {
-                googleLoginBtn.style.display = 'none';
-                emailLoginBtn.style.display = 'none';
-                logoutBtn.style.display = 'block';
-                
-                if (user.providerData[0].providerId === 'google.com') {
-                    googleLoginBtn.innerText = '(Logged In)';
-                } else {
-                    emailLoginBtn.innerText = '(Logged In)';
-                }
-            } else {
-                googleLoginBtn.style.display = 'block';
-                emailLoginBtn.style.display = 'block';
-                logoutBtn.style.display = 'none';
-            }
-        }
+    <a href="register.html">Don't have an account? Register</a>
+  </div>
 
-        googleLoginBtn.addEventListener('click', async () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            try {
-                await auth.signInWithPopup(provider);
-            } catch (error) {
-                console.error(error);
-            }
-        });
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signInWithPopup,
+      GoogleAuthProvider,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
-        emailLoginBtn.addEventListener('click', () => {
-            const email = prompt("Enter your email:");
-            const password = prompt("Enter your password:");
-            auth.signInWithEmailAndPassword(email, password)
-                .catch(error => {
-                    console.error(error);
-                });
-        });
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0w2CYNgPKciXQZ10h-vwnvW-8WmWiPdg",
+      authDomain: "loginpage-55633.firebaseapp.com",
+      projectId: "loginpage-55633",
+      storageBucket: "loginpage-55633.appspot.com",
+      messagingSenderId: "112787874903",
+      appId: "1:112787874903:web:54070d414ef38b7e40af12"
+    };
 
-        logoutBtn.addEventListener('click', async () => {
-            await auth.signOut();
-        });
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-        auth.onAuthStateChanged(updateUI);
-    </script>
+    onAuthStateChanged(auth, user => {
+      if (user) window.location.href = "/";
+    });
+
+    window.login = () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => window.location.href = "/")
+        .catch(error => alert(error.message));
+    };
+
+    document.getElementById("google-login").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then(() => window.location.href = "/")
+        .catch(error => alert("Google Sign-In failed: " + error.message));
+    });
+  </script>
 </body>
 </html>
