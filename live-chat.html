@@ -47,11 +47,11 @@
 
     .chat-input {
       display: flex;
+      flex-direction: column;
       gap: 10px;
     }
 
     input[type="text"] {
-      flex: 1;
       padding: 12px;
       border: none;
       border-radius: 5px;
@@ -78,10 +78,10 @@
       margin: 5px 0;
     }
 
-    .login-link {
-      color: #00ffcc;
-      cursor: pointer;
-      text-decoration: underline;
+    .timestamp {
+      font-size: 0.8em;
+      color: #aaa;
+      margin-left: 5px;
     }
 
     @media (max-width: 600px) {
@@ -90,11 +90,7 @@
         padding: 10px;
       }
 
-      .chat-input {
-        flex-direction: column;
-      }
-
-      .chat-input input[type="text"],
+      .chat-input input,
       .chat-input button {
         width: 100%;
       }
@@ -104,29 +100,19 @@
 <body>
   <div class="chat-container">
     <div class="chat-header">
-      <span id="userName">Welcome</span>
-      <button onclick="logout()">Logout</button>
+      <span id="welcomeName">Welcome!</span>
     </div>
 
     <div class="chat-box" id="chatBox"></div>
 
-    <div class="chat-input" id="chatInputContainer" style="display: none;">
+    <div class="chat-input">
       <input type="text" id="messageInput" placeholder="Type your message..." />
       <button onclick="sendMessage()">Send</button>
-    </div>
-
-    <div id="loginMessage" style="display: none;">
-      <p>You need to <span class="login-link" onclick="redirectToLogin()">log in or sign up</span> to send a message.</p>
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
     import {
       getDatabase,
       ref,
@@ -145,55 +131,43 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getDatabase(app);
     const messagesRef = ref(db, "messages");
 
-    const userNameElem = document.getElementById("userName");
     const chatBox = document.getElementById("chatBox");
-    const loginMessage = document.getElementById("loginMessage");
-    const chatInputContainer = document.getElementById("chatInputContainer");
+    const messageInput = document.getElementById("messageInput");
+    const welcomeName = document.getElementById("welcomeName");
 
-    let currentUser = null;
+    // Ask for name only once
+    let userName = localStorage.getItem("chatUserName");
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        currentUser = user;
-        userNameElem.textContent = `Welcome, ${user.displayName || "User"}`;
-        loginMessage.style.display = "none";
-        chatInputContainer.style.display = "flex";
+    if (!userName) {
+      userName = prompt("Enter your name:");
+      if (userName) {
+        localStorage.setItem("chatUserName", userName);
       } else {
-        currentUser = null;
-        userNameElem.textContent = "Welcome";
-        loginMessage.style.display = "block";
-        chatInputContainer.style.display = "none";
+        userName = "Anonymous";
+        localStorage.setItem("chatUserName", userName);
       }
-    });
+    }
 
-    window.logout = () => {
-      signOut(auth).then(() => {
-        window.location.href = "login.html";
-      });
-    };
+    welcomeName.textContent = `Welcome, ${userName}`;
 
+    // Send message
     window.sendMessage = () => {
-      const input = document.getElementById("messageInput");
-      const message = input.value.trim();
-      if (!message || !currentUser) return;
+      const message = messageInput.value.trim();
+      if (!message) return;
 
       push(messagesRef, {
-        name: currentUser.displayName || "User",
+        name: userName,
         text: message,
         timestamp: Date.now()
       });
 
-      input.value = "";
+      messageInput.value = "";
     };
 
-    window.redirectToLogin = () => {
-      window.location.href = "login.html";
-    };
-
+    // Show messages
     onChildAdded(messagesRef, (snapshot) => {
       const data = snapshot.val();
       const msgElem = document.createElement("div");
