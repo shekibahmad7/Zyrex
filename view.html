@@ -22,30 +22,76 @@
       border-left: 4px solid #4CAF50;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
+    .timestamp {
+      font-size: 0.85em;
+      color: #777;
+      margin-top: 4px;
+      display: block;
+    }
+    button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      background-color: #e53935;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #c62828;
+    }
   </style>
 </head>
 <body>
-  <h2>MacroDroid Messages:</h2>
+  <h2>MacroDroid Messages</h2>
   <ul id="log"></ul>
+  <button onclick="clearLogs()">Clear Logs</button>
 
   <script>
-    fetch("https://loginpage-55633-default-rtdb.asia-southeast1.firebasedatabase.app/logs.json")
-      .then(response => response.json())
-      .then(data => {
-        const logList = document.getElementById("log");
-        if (data) {
-          Object.values(data).forEach(entry => {
-            const li = document.createElement("li");
-            li.textContent = entry.message;
-            logList.appendChild(li);
-          });
-        } else {
-          logList.innerHTML = "<li>No messages found.</li>";
-        }
-      })
-      .catch(err => {
-        console.error("Failed to fetch:", err);
-      });
+    const dbURL = "https://loginpage-55633-default-rtdb.asia-southeast1.firebasedatabase.app/logs.json";
+    const logList = document.getElementById("log");
+
+    function formatTimestamp(raw) {
+      if (!raw) return 'No time';
+      const date = new Date(raw);
+      if (isNaN(date)) return raw; // Show raw if invalid
+      const options = { 
+        day: 'numeric', month: 'short', year: 'numeric', 
+        hour: '2-digit', minute: '2-digit', second: '2-digit' 
+      };
+      return date.toLocaleString('en-US', options);
+    }
+
+    function fetchLogs() {
+      fetch(dbURL)
+        .then(res => res.json())
+        .then(data => {
+          logList.innerHTML = "";
+          if (data) {
+            Object.values(data).forEach(entry => {
+              const li = document.createElement("li");
+              li.innerHTML = `
+                ${entry.message || 'No message'}<br>
+                <span class="timestamp">${formatTimestamp(entry.timestamp)}</span>
+              `;
+              logList.appendChild(li);
+            });
+          } else {
+            logList.innerHTML = "<li>No messages found.</li>";
+          }
+        });
+    }
+
+    function clearLogs() {
+      if (confirm("Are you sure you want to delete all logs?")) {
+        fetch(dbURL, { method: "DELETE" })
+          .then(() => fetchLogs());
+      }
+    }
+
+    // Load on start + refresh every 10 seconds
+    fetchLogs();
+    setInterval(fetchLogs, 10000);
   </script>
 </body>
 </html>
