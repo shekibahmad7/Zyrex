@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MacroDroid Logs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-left: 4px solid #4CAF50;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h2>MacroDroid Messages:</h2>
+  <ul id="log"></ul>
+
+  <script>
+    fetch("https://loginpage-55633-default-rtdb.asia-southeast1.firebasedatabase.app/logs.json")
+      .then(response => response.json())
+      .then(data => {
+        const logList = document.getElementById("log");
+        if (data) {
+          Object.values(data).forEach(entry => {
+            const li = document.createElement("li");
+            li.textContent = entry.message;
+            logList.appendChild(li);
+          });
+        } else {
+          logList.innerHTML = "<li>No messages found.</li>";
+        }
+      })
+      .catch(err => {
+        console.error("Failed to fetch:", err);
+      });
+  </script>
+</body>
+</html>
