@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Make Your Site</title>
+</head>
+<body>
+  <h2>Upload Your HTML</h2>
+  <form id="siteForm">
+    <input type="text" id="sitename" placeholder="Enter site name" required><br><br>
+    <input type="file" id="htmlfile" accept=".html" required><br><br>
+    <button type="submit">Upload</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script>
+    document.getElementById('siteForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const siteName = document.getElementById('sitename').value.trim();
+      const file = document.getElementById('htmlfile').files[0];
+
+      if (!siteName || !file) return;
+
+      const formData = new FormData();
+      formData.append('sitename', siteName);
+      formData.append('htmlfile', file);
+
+      const res = await fetch('/.netlify/functions/uploadSite', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await res.text();
+      document.getElementById('status').innerText = result;
+    });
+  </script>
+</body>
+</html>
