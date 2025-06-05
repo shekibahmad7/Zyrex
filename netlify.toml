@@ -1,1 +1,4 @@
-
+[[redirects]]
+  from = "/redirect"
+  to = "https://google.com"
+  status = 302
