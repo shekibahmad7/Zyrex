@@ -1,4 +1,4 @@
 [[redirects]]
   from = "/redirect"
   to = "https://google.com"
-  status = 302
+  status = 200
