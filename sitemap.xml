@@ -3,4 +3,13 @@
   <url>
     <loc>https://neoxsite.netlify.app/</loc>
   </url>
+  <url>
+    <loc>https://neoxsite.netlify.app/memory-match</loc>
+  </url>
+  <url>
+    <loc>https://neoxsite.netlify.app/tic-tac-toe</loc>
+  </url>
+  <url>
+    <loc>https://neoxsite.netlify.app/live-chat</loc>
+  </url>
 </urlset>
