@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="default.css"/>
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blogs | Neox</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
+      color: #f1f1f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
 
+    .box {
+  background-color: rgba(31, 31, 31, 0.6); /* semi-transparent */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0, 255, 204, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: fadeIn 1.2s ease-in-out;
+  z-index: 1;
+}
+
+    .box h1 {
+      color: #00ffcc;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .button-link {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      background-color: #00ffcc;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.3s;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+    }
+
+    .button-link:hover {
+      background-color: #00ddaa;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: repeating-radial-gradient(circle at center, rgba(0, 255, 204, 0.05) 1px, transparent 10px);
+      animation: floatBg 30s linear infinite;
+    }
+
+    @keyframes floatBg {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
+    }
+
+    @media (max-width: 480px) {
+      .box {
+        padding: 1.5rem;
+      }
+
+      .box h1 {
+        font-size: 1.5rem;
+      }
+
+      .button-link {
+        font-size: 1rem;
+        padding: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-animation"></div>
+  <div class="box">
+    <h1>Blogs</h1>
+
+ <a href="https://samfw.com/firmware/SM-A025F/PAK/A025FXXS8CYC3" class="button-link" target="_blank">A02s Firmware</a>
+
+ <a href="https://github.com/Gabriel2392/ErosFlashTool/releases/download/153/Eros-REL153.apk" class="button-link" download>Eros Flash Tool</a>
+
+ <a href="https://github.com/topjohnwu/Magisk/releases/download/v29.0/Magisk-v29.0.apk" class="button-link" download>Magisk apk</a>
+  </div>
+</body>
+</html>
