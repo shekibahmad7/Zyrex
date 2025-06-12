@@ -1,6 +1,9 @@
+[build]
+  publish = "."
+
 [[redirects]]
-  from = "/*/index.html"
-  to = "/:splat/"
+  from = "/index.html"
+  to = "/"
   status = 301
   force = true
 
