@@ -9,6 +9,6 @@
 
 [[redirects]]
   from = "/*.html"
-  to = "/:splat"
+  to = "/t"
   status = 301
   force = true
