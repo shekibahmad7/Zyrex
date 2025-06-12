@@ -1,4 +1,11 @@
 [[redirects]]
-  from = "/redirect"
-  to = "/tic-tac-toe"
-  status = 200
+  from = "/*/index.html"
+  to = "/:splat/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*.html"
+  to = "/:splat"
+  status = 301
+  force = true
